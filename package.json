@@ -1,0 +1,77 @@
+{
+  "name": "@adonisjs/repl",
+  "version": "0.0.0",
+  "description": "REPL for AdonisJS",
+  "scripts": {
+    "mrm": "mrm --preset=@adonisjs/mrm-preset",
+    "pretest": "npm run lint",
+    "test": "node japaFile.js",
+    "clean": "del build",
+    "compile": "npm run lint && npm run clean && tsc",
+    "build": "npm run compile",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint . --ext=.ts",
+    "format": "prettier --write .",
+    "commit": "git-cz",
+    "release": "np",
+    "version": "npm run build",
+    "sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json adonisjs/repl"
+  },
+  "keywords": [
+    "adonisjs",
+    "repl",
+    "node-repl"
+  ],
+  "author": "virk,adonisjs",
+  "license": "MIT",
+  "devDependencies": {
+    "@adonisjs/mrm-preset": "^2.4.0",
+    "@types/node": "^14.11.5",
+    "commitizen": "^4.2.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "del-cli": "^3.0.1",
+    "doctoc": "^1.4.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-adonis": "^1.0.15",
+    "eslint-plugin-prettier": "^3.1.4",
+    "github-label-sync": "^2.0.0",
+    "husky": "^4.3.0",
+    "japa": "^3.1.1",
+    "mrm": "^2.5.2",
+    "np": "^6.5.0",
+    "npm-audit-html": "^1.4.3",
+    "prettier": "^2.1.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm audit --production --json | ./node_modules/.bin/npm-audit-html && git add npm-audit.html && doctoc README.md --title='## Table of contents' && git add README.md",
+      "commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
+    }
+  },
+  "nyc": {
+    "exclude": [
+      "test"
+    ],
+    "extension": [
+      ".ts"
+    ]
+  },
+  "main": "build/index.js",
+  "files": [
+    "build/src",
+    "build/index.d.ts",
+    "build/index.js"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "np": {
+    "contents": ".",
+    "anyBranch": false
+  }
+}
