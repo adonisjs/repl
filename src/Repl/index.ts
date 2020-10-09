@@ -118,19 +118,34 @@ export class Repl implements ReplContract {
 		}
 	}
 
+	private registerCustomMethodWithContext(name: string) {
+		const customMethod = this.customMethods[name]
+		if (!customMethod) {
+			return
+		}
+
+		/**
+		 * Wrap handler
+		 */
+		const handler = (...args: any[]) => customMethod.handler(this, ...args)
+
+		/**
+		 * Re-define the function name to be more description
+		 */
+		Object.defineProperty(handler, 'name', { value: customMethod.handler.name })
+
+		/**
+		 * Register with the context
+		 */
+		this.server!.context[name] = handler
+	}
+
 	/**
 	 * Register custom methods with the server context
 	 */
 	private registerCustomMethodsWithContext() {
 		Object.keys(this.customMethods).forEach((name) => {
-			const customMethod = this.customMethods[name]
-
-			const handler = (...args: any[]) => {
-				return customMethod.handler(this, ...args)
-			}
-
-			Object.defineProperty(handler, 'name', { value: customMethod.handler.name })
-			this.server!.context[name] = handler
+			this.registerCustomMethodWithContext(name)
 		})
 	}
 
@@ -138,6 +153,9 @@ export class Repl implements ReplContract {
 	 * Setup context with default globals
 	 */
 	private setupContext() {
+		/**
+		 * Register "clear" method
+		 */
 		this.addMethod(
 			'clear',
 			function clear(repl: Repl, key: string) {
@@ -154,6 +172,9 @@ export class Repl implements ReplContract {
 			}
 		)
 
+		/**
+		 * Register "p" method
+		 */
 		this.addMethod(
 			'p',
 			function promisify(_: Repl, fn: Function) {
@@ -165,6 +186,9 @@ export class Repl implements ReplContract {
 			}
 		)
 
+		/**
+		 * Register all custom methods with the context
+		 */
 		this.registerCustomMethodsWithContext()
 	}
 
@@ -215,22 +239,9 @@ export class Repl implements ReplContract {
 	}
 
 	/**
-	 * Returns context values by filtering node globals
-	 * and custom methods
+	 * Prints the help for the custom methods
 	 */
-	private getInspectProperties() {
-		return Object.keys(this.server?.context).reduce((result, key) => {
-			if (!this.customMethods[key] && !GLOBAL_NODE_PROPERTIES.includes(key)) {
-				result[key] = this.server?.context[key]
-			}
-			return result
-		}, {})
-	}
-
-	/**
-	 * Prints the context to the console
-	 */
-	private listContext() {
+	private printCustomMethodsHelp() {
 		/**
 		 * Print loader methods
 		 */
@@ -247,17 +258,34 @@ export class Repl implements ReplContract {
 				)}`
 			)
 		})
+	}
 
+	/**
+	 * Prints the help for the context properties
+	 */
+	private printContextHelp() {
 		/**
 		 * Print context properties
 		 */
 		console.log('')
 		console.log(this.colors.green('CONTEXT PROPERTIES/METHODS:'))
-		console.log(inspect(this.getInspectProperties(), false, 1, true))
 
-		/**
-		 * Display prompt
-		 */
+		const context = Object.keys(this.server?.context).reduce((result, key) => {
+			if (!this.customMethods[key] && !GLOBAL_NODE_PROPERTIES.includes(key)) {
+				result[key] = this.server?.context[key]
+			}
+			return result
+		}, {})
+
+		console.log(inspect(context, false, 1, true))
+	}
+
+	/**
+	 * Prints the context to the console
+	 */
+	private ls() {
+		this.printCustomMethodsHelp()
+		this.printContextHelp()
 		this.server.displayPrompt()
 	}
 
@@ -290,7 +318,7 @@ export class Repl implements ReplContract {
 		 */
 		this.server.defineCommand('ls', {
 			help: 'View a list of available context methods/properties',
-			action: this.listContext.bind(this),
+			action: this.ls.bind(this),
 		})
 
 		/**
@@ -325,6 +353,14 @@ export class Repl implements ReplContract {
 		}
 
 		this.customMethods[name] = { handler, options: Object.assign({ width }, options) }
+
+		/**
+		 * Register method right away when server has been started
+		 */
+		if (this.server) {
+			this.registerCustomMethodWithContext(name)
+		}
+
 		return this
 	}
 }
