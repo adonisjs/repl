@@ -74,7 +74,10 @@
   "np": {
     "contents": ".",
     "anyBranch": false
-  },
+	},
+	"publishConfig": {
+		"access": "public"
+	},
   "dependencies": {
     "@poppinss/colors": "^2.0.3",
     "node-repl-await": "^0.1.1",
