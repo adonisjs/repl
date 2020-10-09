@@ -2,6 +2,13 @@
   "name": "@adonisjs/repl",
   "version": "0.0.0",
   "description": "REPL for AdonisJS",
+  "main": "build/commands/AdonisRepl.js",
+  "files": [
+		"build/src",
+		"build/commands",
+    "build/standalone.d.ts",
+    "build/standalone.js"
+  ],
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
@@ -25,7 +32,9 @@
   "author": "virk,adonisjs",
   "license": "MIT",
   "devDependencies": {
+    "@adonisjs/application": "^3.0.14",
     "@adonisjs/mrm-preset": "^2.4.0",
+    "@adonisjs/require-ts": "^1.0.4",
     "@types/node": "^14.11.5",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
@@ -42,7 +51,6 @@
     "np": "^6.5.0",
     "npm-audit-html": "^1.4.3",
     "prettier": "^2.1.2",
-    "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
   },
   "husky": {
@@ -59,12 +67,6 @@
       ".ts"
     ]
   },
-  "main": "build/index.js",
-  "files": [
-    "build/src",
-    "build/index.d.ts",
-    "build/index.js"
-  ],
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
@@ -73,5 +75,11 @@
   "np": {
     "contents": ".",
     "anyBranch": false
+  },
+  "dependencies": {
+    "@poppinss/colors": "^2.0.3",
+    "node-repl-await": "^0.1.1",
+    "parse-imports": "0.0.4",
+    "string-width": "^4.2.0"
   }
 }
