@@ -1,6 +1,6 @@
 <div align="center">
-  <h3> AdonisJS REPL </h3>
-  <p>A slick <strong>framework agnostic REPL for Node.js</strong> with first class support for <strong>top level await</strong> and <strong>typescript compilation</strong></p>
+  <h1> AdonisJS REPL </h1>
+  <p>A slick <strong>framework agnostic REPL for Node.js</strong> with first class support for <br /> <code>top level await</code>, <code>typescript compilation</code>, <code>accurate stack traces</code> and a lot more.</p>
 </div>
 
 <br />
@@ -39,11 +39,11 @@
 
 AdonisJS REPL is a standalone and framework agnostic package to create custom Node.js REPL with first class support for:
 
-✅ Execute typescript code with in-memory compilation.
-
-✅ Support for top level await keyword.
-
-✅ Ability to define custom method with a help description.
+<p>
+👉 <strong>Execute typescript code with in-memory compilation.</strong>	<br />
+👉 <strong> Support for top level await keyword. </strong><br />
+👉 <strong> Ability to define custom method with a help description. </strong><br />
+</p>
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
