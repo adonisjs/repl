@@ -4,8 +4,8 @@
   "description": "REPL for AdonisJS",
   "main": "build/commands/AdonisRepl.js",
   "files": [
-		"build/src",
-		"build/commands",
+    "build/src",
+    "build/commands",
     "build/standalone.d.ts",
     "build/standalone.js"
   ],
@@ -32,7 +32,6 @@
   "author": "virk,adonisjs",
   "license": "MIT",
   "devDependencies": {
-    "@adonisjs/application": "^3.0.14",
     "@adonisjs/mrm-preset": "^2.4.0",
     "@adonisjs/require-ts": "^1.0.4",
     "@types/node": "^14.11.5",
@@ -81,5 +80,17 @@
     "node-repl-await": "^0.1.1",
     "parse-imports": "0.0.4",
     "string-width": "^4.2.0"
-  }
+  },
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adonisjs/repl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adonisjs/repl/issues"
+  },
+  "homepage": "https://github.com/adonisjs/repl#readme"
 }
