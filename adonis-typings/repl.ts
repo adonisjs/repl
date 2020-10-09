@@ -51,6 +51,11 @@ declare module '@ioc:Adonis/Core/Repl' {
 		 * Add a method. Loader methods works as a shortcut for
 		 */
 		addMethod(name: string, handler: Handler, options?: ContextOptions): this
+
+		/**
+		 * Register a callback to be invoked once the server is ready
+		 */
+		ready(callback: (repl: ReplContract) => void): this
 	}
 
 	const Repl: ReplContract

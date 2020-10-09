@@ -61,6 +61,11 @@ export class Repl implements ReplContract {
 	private longestCustomMethodName = 0
 
 	/**
+	 * Set of registered ready callbacks
+	 */
+	private onReadyCallbacks: ((repl: ReplContract) => void)[] = []
+
+	/**
 	 * A set of registered custom methods
 	 */
 	private customMethods: {
@@ -322,24 +327,45 @@ export class Repl implements ReplContract {
 		})
 
 		/**
-		 * Register loader methods
+		 * Setup context
 		 */
 		this.setupContext()
+
+		/**
+		 * Setup history
+		 */
 		this.setupHistory()
 
 		/**
-		 * Assigning eval function like has better completion. Seriously
-		 * I have no idea
+		 * Assigning eval function like this has better completion support.
 		 */
 		// @ts-ignore
 		this.server['eval'] = this.eval.bind(this)
 
 		/**
-		 * Define exports variable
+		 * Define exports variable when using Typescript
 		 */
-		new Script('exports = module.exports', { filename: __dirname }).runInThisContext()
+		if (this.compiler.compilesTs) {
+			new Script('exports = module.exports', { filename: __dirname }).runInThisContext()
+		}
 
+		/**
+		 * Display prompt
+		 */
 		this.server.displayPrompt()
+
+		/**
+		 * Execute onready callbacks
+		 */
+		this.onReadyCallbacks.forEach((callback) => callback(this))
+		return this
+	}
+
+	/**
+	 * Register a callback to be invoked once the server is ready
+	 */
+	public ready(callback: (repl: ReplContract) => void): this {
+		this.onReadyCallbacks.push(callback)
 		return this
 	}
 
