@@ -1,6 +1,6 @@
 {
   "name": "@adonisjs/repl",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "REPL for AdonisJS",
   "main": "build/commands/AdonisRepl.js",
   "files": [
@@ -74,10 +74,10 @@
   "np": {
     "contents": ".",
     "anyBranch": false
-	},
-	"publishConfig": {
-		"access": "public"
-	},
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@poppinss/colors": "^2.0.3",
     "node-repl-await": "^0.1.1",
