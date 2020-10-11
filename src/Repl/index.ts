@@ -12,7 +12,7 @@ import stringWidth from 'string-width'
 import { getBest } from '@poppinss/colors'
 import { start, REPLServer, Recoverable } from 'repl'
 import { inspect, promisify as utilPromisify } from 'util'
-import { ReplContract, Handler, ContextOptions } from '@ioc:Adonis/Core/Repl'
+import { ReplContract, Handler, ContextOptions } from '@ioc:Adonis/Addons/Repl'
 import { Compiler as TsCompiler } from '@adonisjs/require-ts/build/src/Compiler'
 
 import { Compiler } from '../Compiler'
