@@ -1,6 +1,6 @@
 {
   "name": "@adonisjs/repl",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "REPL for AdonisJS",
   "main": "build/providers/ReplProvider.js",
   "files": [
@@ -10,8 +10,8 @@
     "build/src",
     "build/standalone.d.ts",
     "build/standalone.js"
-	],
-	"typings": "./build/adonis-typings/index.d.ts",
+  ],
+  "typings": "./build/adonis-typings/index.d.ts",
   "scripts": {
     "mrm": "mrm --preset=@adonisjs/mrm-preset",
     "pretest": "npm run lint",
@@ -103,10 +103,14 @@
   "bugs": {
     "url": "https://github.com/adonisjs/repl/issues"
   },
-	"homepage": "https://github.com/adonisjs/repl#readme",
-	"adonisjs": {
-		"aceProviders": ["@adonisjs/repl"],
-		"commands": ["@adonisjs/repl/build/commands"],
-		"types": "@adonisjs/repl"
-	}
+  "homepage": "https://github.com/adonisjs/repl#readme",
+  "adonisjs": {
+    "aceProviders": [
+      "@adonisjs/repl"
+    ],
+    "commands": [
+      "@adonisjs/repl/build/commands"
+    ],
+    "types": "@adonisjs/repl"
+  }
 }
