@@ -10,6 +10,9 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone'
 
 export default class ReplCommand extends BaseCommand {
+	public static commandName = 'repl'
+	public static description = 'Start a new REPL session'
+
 	public static settings = {
 		loadApp: true,
 		appEnvironment: 'repl',
