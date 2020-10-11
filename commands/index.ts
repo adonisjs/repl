@@ -7,4 +7,4 @@
  * file that was distributed with this source code.
  */
 
-export default ['@adonisjs/lucid/build/commands/AdonisRepl']
+export default ['@adonisjs/repl/build/commands/AdonisRepl']
