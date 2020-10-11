@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-declare module '@ioc:Adonis/Core/Repl' {
+declare module '@ioc:Adonis/Addons/Repl' {
 	import { REPLServer } from 'repl'
 	import { getBest } from '@poppinss/colors'
 

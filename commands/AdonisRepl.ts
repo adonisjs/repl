@@ -17,6 +17,6 @@ export default class ReplCommand extends BaseCommand {
 	}
 
 	public async run() {
-		this.application.container.use('Adonis/Core/Repl').start()
+		this.application.container.use('Adonis/Addons/Repl').start()
 	}
 }

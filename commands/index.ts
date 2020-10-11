@@ -7,10 +7,4 @@
  * file that was distributed with this source code.
  */
 
-declare module '@ioc:Adonis/Core/Application' {
-	import { ReplContract } from '@ioc:Adonis/Addons/Repl'
-
-	export interface ContainerBindings {
-		'Adonis/Addons/Repl': ReplContract
-	}
-}
+export default ['@adonisjs/lucid/build/commands/AdonisRepl']
