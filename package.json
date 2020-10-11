@@ -2,10 +2,12 @@
   "name": "@adonisjs/repl",
   "version": "1.0.0",
   "description": "REPL for AdonisJS",
-  "main": "build/commands/AdonisRepl.js",
+  "main": "build/providers/ReplProvider.js",
   "files": [
+		"build/adonis-typings",
+		"build/commands",
+		"build/providers",
     "build/src",
-    "build/commands",
     "build/standalone.d.ts",
     "build/standalone.js"
   ],
@@ -30,8 +32,12 @@
     "node-repl"
   ],
   "author": "virk,adonisjs",
-  "license": "MIT",
+	"license": "MIT",
+	"peerDependencies": {
+		"@adonisjs/core": "^5.0.2-beta-rc"
+	},
   "devDependencies": {
+    "@adonisjs/core": "^5.0.2-beta-rc-4",
     "@adonisjs/mrm-preset": "^2.4.0",
     "@adonisjs/require-ts": "^1.0.4",
     "@types/node": "^14.11.8",
