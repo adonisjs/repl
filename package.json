@@ -40,6 +40,7 @@
     "@adonisjs/core": "^5.0.2-beta-rc-4",
     "@adonisjs/mrm-preset": "^2.4.0",
     "@adonisjs/require-ts": "^1.0.4",
+    "@poppinss/dev-utils": "^1.0.11",
     "@types/node": "^14.11.8",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
