@@ -15,7 +15,7 @@ export default class ReplCommand extends BaseCommand {
 
 	public static settings = {
 		loadApp: true,
-		appEnvironment: 'repl',
+		environment: 'repl' as const,
 		stayAlive: true,
 	}
 
