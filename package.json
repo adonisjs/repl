@@ -38,7 +38,7 @@
     "@adonisjs/core": "^5.0.2-beta-rc"
   },
   "devDependencies": {
-    "@adonisjs/core": "^5.0.2-beta-rc-4",
+    "@adonisjs/core": "^5.0.2-beta-rc-6",
     "@adonisjs/mrm-preset": "^2.4.0",
     "@adonisjs/require-ts": "^1.0.4",
     "@poppinss/dev-utils": "^1.0.11",
