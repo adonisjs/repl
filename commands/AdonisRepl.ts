@@ -21,5 +21,12 @@ export default class ReplCommand extends BaseCommand {
 
 	public async run() {
 		this.application.container.use('Adonis/Addons/Repl').start()
+
+		/**
+		 * Gracefully shutdown the application
+		 */
+		this.application.container.use('Adonis/Addons/Repl').server.on('exit', async () => {
+			await this.application.shutdown()
+		})
 	}
 }
