@@ -7,7 +7,7 @@
 
 <div align="center">
 
-[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![audit-report-image]][audit-report-url]
+[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![synk-image]][synk-url]
 
 </div>
 
@@ -49,14 +49,15 @@ AdonisJS REPL is a standalone and framework agnostic package to create custom No
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of contents
 
+- [Table of contents](#table-of-contents)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Typescript support](#typescript-support)
-  - [History file](#history-file)
+	- [Typescript support](#typescript-support)
+	- [History file](#history-file)
 - [Accurate Stack Trace](#accurate-stack-trace)
 - [The `.ls` command](#the-ls-command)
 - [Adding custom properties](#adding-custom-properties)
-  - [Global methods](#global-methods)
+	- [Global methods](#global-methods)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -201,11 +202,15 @@ Checkout the following example
 
 [circleci-image]: https://img.shields.io/circleci/project/github/adonisjs/repl/master.svg?style=for-the-badge&logo=circleci
 [circleci-url]: https://circleci.com/gh/adonisjs/repl 'circleci'
+
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
 [typescript-url]: "typescript"
+
 [npm-image]: https://img.shields.io/npm/v/@adonisjs/repl.svg?style=for-the-badge&logo=npm
 [npm-url]: https://npmjs.org/package/@adonisjs/repl 'npm'
+
 [license-image]: https://img.shields.io/npm/l/@adonisjs/repl?color=blueviolet&style=for-the-badge
 [license-url]: LICENSE.md 'license'
-[audit-report-image]: https://img.shields.io/badge/-Audit%20Report-blueviolet?style=for-the-badge
-[audit-report-url]: https://htmlpreview.github.io/?https://github.com/adonisjs/repl/blob/develop/npm-audit.html 'audit-report'
+
+[synk-image]: https://img.shields.io/snyk/vulnerabilities/github/adonisjs/repl?label=Synk%20Vulnerabilities&style=for-the-badge
+[synk-url]: https://snyk.io/test/github/adonisjs/repl?targetFile=package.json "synk"
