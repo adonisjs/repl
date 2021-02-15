@@ -32,8 +32,8 @@ export async function setup() {
 		providers: ['@adonisjs/core', '../../providers/ReplProvider'],
 	})
 
-	app.setup()
-	app.registerProviders()
+	await app.setup()
+	await app.registerProviders()
 	await app.bootProviders()
 
 	return app
