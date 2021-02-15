@@ -83,7 +83,8 @@
     "anyBranch": false
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "next"
   },
   "dependencies": {
     "@poppinss/colors": "^2.1.0",
