@@ -16,36 +16,36 @@ import { Repl } from '../src/Repl'
 const fs = new Filesystem(join(__dirname, './app'))
 
 export async function setup() {
-	await fs.add('.env', '')
-	await fs.add(
-		'config/app.ts',
-		`
+  await fs.add('.env', '')
+  await fs.add(
+    'config/app.ts',
+    `
 		export const appKey = '${Math.random().toFixed(36).substring(2, 38)}',
 		export const http = {
 			cookie: {},
 			trustProxy: () => true,
 		}
 	`
-	)
+  )
 
-	const app = new Application(fs.basePath, 'web', {
-		providers: ['@adonisjs/core', '../../providers/ReplProvider'],
-	})
+  const app = new Application(fs.basePath, 'web', {
+    providers: ['@adonisjs/core', '../../providers/ReplProvider'],
+  })
 
-	await app.setup()
-	await app.registerProviders()
-	await app.bootProviders()
+  await app.setup()
+  await app.registerProviders()
+  await app.bootProviders()
 
-	return app
+  return app
 }
 
 test.group('Repl Provider', (group) => {
-	group.afterEach(async () => {
-		await fs.cleanup()
-	})
+  group.afterEach(async () => {
+    await fs.cleanup()
+  })
 
-	test('register repl provider', async (assert) => {
-		const app = await setup()
-		assert.instanceOf(app.container.use('Adonis/Addons/Repl'), Repl)
-	})
+  test('register repl provider', async (assert) => {
+    const app = await setup()
+    assert.instanceOf(app.container.use('Adonis/Addons/Repl'), Repl)
+  })
 })

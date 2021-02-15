@@ -10,23 +10,23 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone'
 
 export default class ReplCommand extends BaseCommand {
-	public static commandName = 'repl'
-	public static description = 'Start a new REPL session'
+  public static commandName = 'repl'
+  public static description = 'Start a new REPL session'
 
-	public static settings = {
-		loadApp: true,
-		environment: 'repl' as const,
-		stayAlive: true,
-	}
+  public static settings = {
+    loadApp: true,
+    environment: 'repl' as const,
+    stayAlive: true,
+  }
 
-	public async run() {
-		this.application.container.use('Adonis/Addons/Repl').start()
+  public async run() {
+    this.application.container.use('Adonis/Addons/Repl').start()
 
-		/**
-		 * Gracefully shutdown the application
-		 */
-		this.application.container.use('Adonis/Addons/Repl').server.on('exit', async () => {
-			await this.application.shutdown()
-		})
-	}
+    /**
+     * Gracefully shutdown the application
+     */
+    this.application.container.use('Adonis/Addons/Repl').server.on('exit', async () => {
+      await this.application.shutdown()
+    })
+  }
 }

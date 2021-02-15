@@ -8,56 +8,56 @@
  */
 
 declare module '@ioc:Adonis/Addons/Repl' {
-	import { REPLServer } from 'repl'
-	import { getBest } from '@poppinss/colors'
+  import { REPLServer } from 'repl'
+  import { getBest } from '@poppinss/colors'
 
-	/**
-	 * Custom method callback
-	 */
-	export type Handler = (repl: ReplContract, ...args: any[]) => any
+  /**
+   * Custom method callback
+   */
+  export type Handler = (repl: ReplContract, ...args: any[]) => any
 
-	/**
-	 * Options that can be set when defining a loader
-	 * method
-	 */
-	export type ContextOptions = {
-		description?: string
-		usage?: string
-	}
+  /**
+   * Options that can be set when defining a loader
+   * method
+   */
+  export type ContextOptions = {
+    description?: string
+    usage?: string
+  }
 
-	/**
-	 * Shape of the REPL class
-	 */
-	export interface ReplContract {
-		colors: ReturnType<typeof getBest>
+  /**
+   * Shape of the REPL class
+   */
+  export interface ReplContract {
+    colors: ReturnType<typeof getBest>
 
-		/**
-		 * Reference to the REPL server
-		 */
-		server: REPLServer
+    /**
+     * Reference to the REPL server
+     */
+    server: REPLServer
 
-		/**
-		 * Start the repl
-		 */
-		start(): this
+    /**
+     * Start the repl
+     */
+    start(): this
 
-		/**
-		 * Notify by writing message to the console
-		 * and resuming the prompt
-		 */
-		notify(message: string): void
+    /**
+     * Notify by writing message to the console
+     * and resuming the prompt
+     */
+    notify(message: string): void
 
-		/**
-		 * Add a method. Loader methods works as a shortcut for
-		 */
-		addMethod(name: string, handler: Handler, options?: ContextOptions): this
+    /**
+     * Add a method. Loader methods works as a shortcut for
+     */
+    addMethod(name: string, handler: Handler, options?: ContextOptions): this
 
-		/**
-		 * Register a callback to be invoked once the server is ready
-		 */
-		ready(callback: (repl: ReplContract) => void): this
-	}
+    /**
+     * Register a callback to be invoked once the server is ready
+     */
+    ready(callback: (repl: ReplContract) => void): this
+  }
 
-	const Repl: ReplContract
-	export default Repl
+  const Repl: ReplContract
+  export default Repl
 }

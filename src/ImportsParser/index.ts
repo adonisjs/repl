@@ -54,96 +54,96 @@ import parseImports from 'parse-imports'
  * However, we have to be tolerant to the white spaces.
  */
 export class ImportsParser {
-	private async parseImport(statement: string): Promise<string> {
-		statement = statement.trim()
+  private async parseImport(statement: string): Promise<string> {
+    statement = statement.trim()
 
-		/**
-		 * Return the value as it is when doesn't include the import
-		 * keyword
-		 */
-		if (!statement.startsWith('import')) {
-			return statement
-		}
+    /**
+     * Return the value as it is when doesn't include the import
+     * keyword
+     */
+    if (!statement.startsWith('import')) {
+      return statement
+    }
 
-		/**
-		 * Parse all imports in the current line
-		 */
-		const imports = await parseImports(statement)
-		const importsAsArray = [...imports]
+    /**
+     * Parse all imports in the current line
+     */
+    const imports = await parseImports(statement)
+    const importsAsArray = [...imports]
 
-		return importsAsArray
-			.map(({ moduleSpecifier, importClause }) => {
-				const tokens: string[] = []
-				const localVariables: string[] = []
+    return importsAsArray
+      .map(({ moduleSpecifier, importClause }) => {
+        const tokens: string[] = []
+        const localVariables: string[] = []
 
-				/**
-				 * Has `* as` namespace import
-				 */
-				if (importClause && importClause.namespace) {
-					const identifier = `repl_${importClause.namespace}`
-					tokens.push(`* as ${identifier}`)
-					localVariables.push(`var ${importClause.namespace} = ${identifier}`)
-				}
+        /**
+         * Has `* as` namespace import
+         */
+        if (importClause && importClause.namespace) {
+          const identifier = `repl_${importClause.namespace}`
+          tokens.push(`* as ${identifier}`)
+          localVariables.push(`var ${importClause.namespace} = ${identifier}`)
+        }
 
-				/**
-				 * Has default namespace import
-				 */
-				if (importClause && importClause.default) {
-					const identifier = `repl_${importClause.default}`
-					tokens.push(identifier)
-					localVariables.push(`var ${importClause.default} = ${identifier}`)
-				}
+        /**
+         * Has default namespace import
+         */
+        if (importClause && importClause.default) {
+          const identifier = `repl_${importClause.default}`
+          tokens.push(identifier)
+          localVariables.push(`var ${importClause.default} = ${identifier}`)
+        }
 
-				/**
-				 * Has named imports
-				 */
-				if (importClause && importClause.named.length) {
-					importClause.named.forEach((name, index) => {
-						const identifier = `repl_${name.binding}`
-						let expression = ''
+        /**
+         * Has named imports
+         */
+        if (importClause && importClause.named.length) {
+          importClause.named.forEach((name, index) => {
+            const identifier = `repl_${name.binding}`
+            let expression = ''
 
-						/**
-						 * Add starting curly brace to named aliases
-						 */
-						if (index === 0) {
-							expression += '{'
-						}
+            /**
+             * Add starting curly brace to named aliases
+             */
+            if (index === 0) {
+              expression += '{'
+            }
 
-						/**
-						 * Setup expression
-						 */
-						expression += `${name.specifier} as ${identifier}`
+            /**
+             * Setup expression
+             */
+            expression += `${name.specifier} as ${identifier}`
 
-						/**
-						 * Add ending curly brace to named aliases
-						 */
-						if (index + 1 === importClause.named.length) {
-							expression += '}'
-						}
+            /**
+             * Add ending curly brace to named aliases
+             */
+            if (index + 1 === importClause.named.length) {
+              expression += '}'
+            }
 
-						tokens.push(expression)
-						localVariables.push(`var ${name.binding} = ${identifier}`)
-					})
-				}
+            tokens.push(expression)
+            localVariables.push(`var ${name.binding} = ${identifier}`)
+          })
+        }
 
-				const localVariablesDeclaration = `${localVariables.join('; ')}`
-				return `import ${tokens.join(',')} from ${
-					moduleSpecifier.code
-				}; ${localVariablesDeclaration}`
-			})
-			.join('')
-	}
+        const localVariablesDeclaration = `${localVariables.join('; ')}`
+        return `import ${tokens.join(',')} from ${
+          moduleSpecifier.code
+        }; ${localVariablesDeclaration}`
+      })
+      .join('')
+  }
 
-	/**
-	 * Parse a given line of code
-	 */
-	public async parse(line: string): Promise<string> {
-		const parsedStatement = await Promise.all(
-			line.split(';').map((statement) => {
-				return this.parseImport(statement)
-			})
-		)
+  /**
+   * Parse a given line of code
+   */
+  public async parse(line: string): Promise<string> {
+    const parsedStatement = await Promise.all(
+      line.split(';').map((statement) => {
+        return this.parseImport(statement)
+      })
+    )
 
-		return parsedStatement.join('; ')
-	}
+    return parsedStatement.join('; ')
+  }
 }
