@@ -35,10 +35,10 @@
   "author": "virk,adonisjs",
   "license": "MIT",
   "peerDependencies": {
-    "@adonisjs/core": "^5.0.5-canary-rc"
+    "@adonisjs/core": "^5.1.0"
   },
   "devDependencies": {
-    "@adonisjs/core": "^5.0.5-canary-rc-1",
+    "@adonisjs/core": "^5.1.0",
     "@adonisjs/mrm-preset": "^3.0.0",
     "@adonisjs/require-ts": "^2.0.3",
     "@poppinss/dev-utils": "^1.1.1",
