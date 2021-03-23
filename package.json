@@ -84,7 +84,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "tag": "next"
+    "tag": "latest"
   },
   "dependencies": {
     "@poppinss/colors": "^2.1.1",
