@@ -34,6 +34,37 @@ const GLOBAL_NODE_PROPERTIES = [
   '__importDefault',
 ]
 
+/**
+ * Properties injected by the ts-utils
+ * library
+ */
+const TS_UTIL_HELPERS = [
+  '__extends',
+  '__assign',
+  '__rest',
+  '__decorate',
+  '__param',
+  '__metadata',
+  '__awaiter',
+  '__generator',
+  '__exportStar',
+  '__values',
+  '__read',
+  '__spread',
+  '__spreadArrays',
+  '__spreadArray',
+  '__await',
+  '__asyncGenerator',
+  '__asyncDelegator',
+  '__asyncValues',
+  '__makeTemplateObject',
+  '__importStar',
+  '__importDefault',
+  '__classPrivateFieldGet',
+  '__classPrivateFieldSet',
+  '__createBinding',
+]
+
 const icons =
   process.platform === 'win32' && !process.env.WT_SESSION
     ? {
@@ -276,7 +307,11 @@ export class Repl implements ReplContract {
     console.log(this.colors.green('CONTEXT PROPERTIES/METHODS:'))
 
     const context = Object.keys(this.server?.context).reduce((result, key) => {
-      if (!this.customMethods[key] && !GLOBAL_NODE_PROPERTIES.includes(key)) {
+      if (
+        !this.customMethods[key] &&
+        !GLOBAL_NODE_PROPERTIES.includes(key) &&
+        !TS_UTIL_HELPERS.includes(key)
+      ) {
         result[key] = this.server?.context[key]
       }
       return result
