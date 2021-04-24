@@ -20,7 +20,9 @@ export default class ReplCommand extends BaseCommand {
   }
 
   public async run() {
-    this.application.container.resolveBinding('Adonis/Core/Route').commit()
+    this.application.container.withBindings(['Adonis/Core/Route'], (Route) => {
+      Route.commit()
+    })
     this.application.container.use('Adonis/Addons/Repl').start()
 
     /**
