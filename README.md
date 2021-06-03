@@ -7,7 +7,7 @@
 
 <div align="center">
 
-[![circleci-image]][circleci-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![synk-image]][synk-url]
+[![gh-workflow-image]][gh-workflow-url] [![npm-image]][npm-url] ![][typescript-image] [![license-image]][license-url] [![synk-image]][synk-url]
 
 </div>
 
@@ -200,8 +200,8 @@ Checkout the following example
 
 ![](./assets/context-behavior.png)
 
-[circleci-image]: https://img.shields.io/circleci/project/github/adonisjs/repl/master.svg?style=for-the-badge&logo=circleci
-[circleci-url]: https://circleci.com/gh/adonisjs/repl 'circleci'
+[gh-workflow-image]: https://img.shields.io/github/workflow/status/adonisjs/repl/test?style=for-the-badge
+[gh-workflow-url]: https://github.com/adonisjs/repl/actions/workflows/test.yml "Github action"
 
 [typescript-image]: https://img.shields.io/badge/Typescript-294E80.svg?style=for-the-badge&logo=typescript
 [typescript-url]: "typescript"

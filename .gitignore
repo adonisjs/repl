@@ -12,3 +12,4 @@ dist
 shrinkwrap.yaml
 package-lock.json
 yarn.lock
+test/__app
