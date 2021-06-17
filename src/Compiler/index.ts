@@ -52,7 +52,7 @@ export class Compiler {
      * Compile using typescript compiler and patch the
      * `sourceMappingUrl` comment to be a block level comment.
      */
-    compiledOutput = this.tsCompiler!.compile(filename, compiledOutput)
+    compiledOutput = this.tsCompiler!.compile(filename, compiledOutput, true)
     return `${compiledOutput.replace('//# sourceMappingURL=', '/**# sourceMappingURL=')} */`
   }
 
