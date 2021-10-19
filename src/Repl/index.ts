@@ -22,6 +22,7 @@ import { Compiler } from '../Compiler'
  * ls inspect
  */
 const GLOBAL_NODE_PROPERTIES = [
+  'performance',
   'global',
   'clearInterval',
   'clearTimeout',
