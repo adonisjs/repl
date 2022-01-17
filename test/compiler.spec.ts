@@ -69,7 +69,7 @@ test.group('Compiler', () => {
 
     assert.equal(
       removeSourceMap(compiled).trim(),
-      ['(async () => { return (await getDb());\n })()'].join(EOL)
+      [`(async () => { return (await getDb());${EOL} })()`].join(EOL)
     )
     assert.isTrue(awaitPromise)
   })
