@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import { EOL } from 'os'
 import test from 'japa'
 import { Compiler } from '../src/Compiler'
 
@@ -23,7 +24,7 @@ function getImportDefaultStatement() {
     '    return (mod && mod.__esModule) ? mod : { "default": mod };',
     '};',
     'Object.defineProperty(exports, "__esModule", { value: true });',
-  ].join('\n')
+  ].join(EOL)
 }
 
 function getAsyncImportDefaultStatement() {
@@ -33,7 +34,7 @@ function getAsyncImportDefaultStatement() {
     '    return (mod && mod.__esModule) ? mod : { "default": mod };',
     '});',
     'Object.defineProperty(exports, "__esModule", { value: true });',
-  ].join('\n')
+  ].join(EOL)
 }
 
 test.group('Compiler', () => {
@@ -57,7 +58,7 @@ test.group('Compiler', () => {
         getImportDefaultStatement(),
         'const User_1 = __importDefault(require("App/Models/User"));',
         'var User = User_1.default;',
-      ].join('\n')
+      ].join(EOL)
     )
     assert.isFalse(awaitPromise)
   })
@@ -68,7 +69,7 @@ test.group('Compiler', () => {
 
     assert.equal(
       removeSourceMap(compiled).trim(),
-      ['(async () => { return (await getDb());\n })()'].join('\n')
+      ['(async () => { return (await getDb());\n })()'].join(EOL)
     )
     assert.isTrue(awaitPromise)
   })
@@ -82,7 +83,7 @@ test.group('Compiler', () => {
 
     assert.equal(
       removeSourceMap(compiled).trim(),
-      ['(async () => { void (db = await getDb());', ' })()'].join('\n')
+      ['(async () => { void (db = await getDb());', ' })()'].join(EOL)
     )
     assert.isTrue(awaitPromise)
   })
@@ -96,7 +97,7 @@ test.group('Compiler', () => {
 
     assert.equal(
       removeSourceMap(compiled).trim(),
-      ['(async () => { void ({ db } = await getDb());', ' })()'].join('\n')
+      ['(async () => { void ({ db } = await getDb());', ' })()'].join(EOL)
     )
     assert.isTrue(awaitPromise)
   })
@@ -118,7 +119,7 @@ test.group('Compiler', () => {
         'void (User_1 = __importDefault(require("App/Models/User")));',
         'return (await User_1.default.find());',
         ' })()',
-      ].join('\n')
+      ].join(EOL)
     )
     assert.isTrue(awaitPromise)
   })
