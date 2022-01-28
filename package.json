@@ -88,7 +88,7 @@
   "dependencies": {
     "@poppinss/colors": "^3.0.0",
     "node-repl-await": "^0.1.2",
-    "parse-imports": "0.0.5",
+    "parse-imports": "1.1.0",
     "string-width": "^4.2.2"
   },
   "directories": {
