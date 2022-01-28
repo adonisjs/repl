@@ -89,7 +89,7 @@
     "@poppinss/colors": "^3.0.0",
     "node-repl-await": "^0.1.2",
     "parse-imports": "0.0.5",
-    "string-width": "^4.2.2"
+    "string-width": "^5.0.1"
   },
   "directories": {
     "example": "example",
