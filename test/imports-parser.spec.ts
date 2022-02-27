@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import test from 'japa'
+import { test } from '@japa/runner'
 import { ImportsParser } from '../src/ImportsParser'
 
 test.group('Imports Parser', () => {
-  test('parse namespace alias statements', async (assert) => {
+  test('parse namespace alias statements', async ({ assert }) => {
     const parser = new ImportsParser()
     assert.equal(
       await parser.parse(`import * as foo from './some_module'`),
@@ -19,7 +19,7 @@ test.group('Imports Parser', () => {
     )
   })
 
-  test('parse default statements', async (assert) => {
+  test('parse default statements', async ({ assert }) => {
     const parser = new ImportsParser()
     assert.equal(
       await parser.parse(`import foo from './some_module'`),
@@ -27,7 +27,7 @@ test.group('Imports Parser', () => {
     )
   })
 
-  test('parse named statements', async (assert) => {
+  test('parse named statements', async ({ assert }) => {
     const parser = new ImportsParser()
     assert.equal(
       await parser.parse(`import { foo } from './some_module'`),
@@ -35,7 +35,7 @@ test.group('Imports Parser', () => {
     )
   })
 
-  test('parse named + default statements', async (assert) => {
+  test('parse named + default statements', async ({ assert }) => {
     const parser = new ImportsParser()
     assert.equal(
       await parser.parse(`import main, { foo } from './some_module'`),
@@ -43,7 +43,7 @@ test.group('Imports Parser', () => {
     )
   })
 
-  test('parse named with aliases', async (assert) => {
+  test('parse named with aliases', async ({ assert }) => {
     const parser = new ImportsParser()
     assert.equal(
       await parser.parse(`import { foo as name } from './some_module'`),
@@ -51,7 +51,7 @@ test.group('Imports Parser', () => {
     )
   })
 
-  test('access imported value right away', async (assert) => {
+  test('access imported value right away', async ({ assert }) => {
     const parser = new ImportsParser()
     assert.equal(
       await parser.parse(`import foo from './some_module'; console.log(foo)`),
@@ -59,7 +59,7 @@ test.group('Imports Parser', () => {
     )
   })
 
-  test('define multiple import statements in one line', async (assert) => {
+  test('define multiple import statements in one line', async ({ assert }) => {
     const parser = new ImportsParser()
     assert.equal(
       await parser.parse(`import foo from './some_module'; import bar from './some_module'`),
