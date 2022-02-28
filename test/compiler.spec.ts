@@ -8,7 +8,7 @@
  */
 
 import { EOL } from 'os'
-import test from 'japa'
+import { test } from '@japa/runner'
 import { Compiler } from '../src/Compiler'
 
 const COMPILER_SYMBOL = Symbol.for('REQUIRE_TS_COMPILER')
@@ -38,14 +38,14 @@ function getAsyncImportDefaultStatement() {
 }
 
 test.group('Compiler', () => {
-  test('compile single line statement', async (assert) => {
+  test('compile single line statement', async ({ assert }) => {
     const compiler = new Compiler(global[COMPILER_SYMBOL])
     const { compiled, awaitPromise } = await compiler.compile('2 + 2', __filename)
     assert.equal(removeSourceMap(compiled).trim(), '2 + 2;')
     assert.isFalse(awaitPromise)
   })
 
-  test('compile single line import statements', async (assert) => {
+  test('compile single line import statements', async ({ assert }) => {
     const compiler = new Compiler(global[COMPILER_SYMBOL])
     const { compiled, awaitPromise } = await compiler.compile(
       `import User from 'App/Models/User'`,
@@ -63,7 +63,7 @@ test.group('Compiler', () => {
     assert.isFalse(awaitPromise)
   })
 
-  test('compile await keyword', async (assert) => {
+  test('compile await keyword', async ({ assert }) => {
     const compiler = new Compiler(global[COMPILER_SYMBOL])
     const { compiled, awaitPromise } = await compiler.compile(`await getDb()`, __filename)
 
@@ -74,7 +74,7 @@ test.group('Compiler', () => {
     assert.isTrue(awaitPromise)
   })
 
-  test('compile await keyword with variable assignment', async (assert) => {
+  test('compile await keyword with variable assignment', async ({ assert }) => {
     const compiler = new Compiler(global[COMPILER_SYMBOL])
     const { compiled, awaitPromise } = await compiler.compile(
       `const db = await getDb()`,
@@ -88,7 +88,7 @@ test.group('Compiler', () => {
     assert.isTrue(awaitPromise)
   })
 
-  test('compile await keyword with destructuring assignment', async (assert) => {
+  test('compile await keyword with destructuring assignment', async ({ assert }) => {
     const compiler = new Compiler(global[COMPILER_SYMBOL])
     const { compiled, awaitPromise } = await compiler.compile(
       `const { db } = await getDb()`,
@@ -102,7 +102,7 @@ test.group('Compiler', () => {
     assert.isTrue(awaitPromise)
   })
 
-  test('compile multi-line import statements', async (assert) => {
+  test('compile multi-line import statements', async ({ assert }) => {
     const compiler = new Compiler(global[COMPILER_SYMBOL])
     const { compiled, awaitPromise } = await compiler.compile(
       `

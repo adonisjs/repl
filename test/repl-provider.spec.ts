@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import test from 'japa'
+import { test } from '@japa/runner'
 import { join } from 'path'
 import { Filesystem } from '@poppinss/dev-utils'
 import { Application } from '@adonisjs/core/build/standalone'
@@ -40,11 +40,11 @@ export async function setup() {
 }
 
 test.group('Repl Provider', (group) => {
-  group.afterEach(async () => {
+  group.each.teardown(async () => {
     await fs.cleanup()
   })
 
-  test('register repl provider', async (assert) => {
+  test('register repl provider', async ({ assert }) => {
     const app = await setup()
     assert.instanceOf(app.container.use('Adonis/Addons/Repl'), Repl)
   })
