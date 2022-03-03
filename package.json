@@ -52,7 +52,7 @@
     "del-cli": "^4.0.1",
     "doctoc": "^2.1.0",
     "eslint": "^8.10.0",
-    "eslint-config-prettier": "^8.4.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-adonis": "^2.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "github-label-sync": "^2.0.2",
@@ -60,7 +60,7 @@
     "mrm": "^3.0.10",
     "np": "^7.6.0",
     "prettier": "^2.5.1",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.2"
   },
   "husky": {
     "hooks": {
