@@ -1,6 +1,6 @@
 {
   "name": "@adonisjs/repl",
-  "version": "3.1.10",
+  "version": "3.1.11",
   "description": "REPL for AdonisJS",
   "main": "build/providers/ReplProvider.js",
   "files": [
