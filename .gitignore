@@ -9,7 +9,9 @@ coverage
 *.log
 build
 dist
-shrinkwrap.yaml
 package-lock.json
 yarn.lock
+shrinkwrap.yaml
+.env
+!test/fixtures/.env
 test/__app

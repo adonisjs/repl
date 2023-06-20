@@ -1,7 +1,10 @@
 import { assert } from '@japa/assert'
 import { specReporter } from '@japa/spec-reporter'
+import { fileSystem } from '@japa/file-system'
 import { runFailedTests } from '@japa/run-failed-tests'
 import { processCliArgs, configure, run } from '@japa/runner'
+import { pathToFileURL } from 'node:url'
+import { BASE_URL } from '../test_helpers/index.js'
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +22,10 @@ import { processCliArgs, configure, run } from '@japa/runner'
 configure({
   ...processCliArgs(process.argv.slice(2)),
   ...{
-    files: ['test/**/*.spec.ts'],
-    plugins: [assert(), runFailedTests()],
+    files: ['tests/**/*.spec.ts'],
+    plugins: [assert(), runFailedTests(), fileSystem({ basePath: BASE_URL })],
     reporters: [specReporter()],
-    importer: (filePath: string) => import(filePath),
+    importer: (filePath: string) => import(pathToFileURL(filePath).href),
   },
 })
 
