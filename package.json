@@ -120,12 +120,12 @@
     "access": "public",
     "tag": "latest"
   },
-  "np": {
-    "message": "chore(release): %s",
-    "tag": "latest",
-    "branch": "main",
-    "anyBranch": false
-  },
+	"np": {
+		"message": "chore(release): %s",
+		"tag": "next",
+		"branch": "main",
+		"anyBranch": false
+	},
   "c8": {
     "reporter": [
       "text",
