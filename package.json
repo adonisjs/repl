@@ -17,10 +17,8 @@
     "factories",
     "build/configure.js",
     "build/configure.d.ts",
-    "build/configure.d.ts.map",
     "build/index.js",
     "build/index.d.ts",
-    "build/index.d.ts.map",
     "build/src",
     "build/services",
     "build/providers",
@@ -28,7 +26,6 @@
     "build/factories",
     "build/stubs",
     "build/index.d.ts",
-    "build/index.d.ts.map",
     "build/index.js"
   ],
   "exports": {
