@@ -8,11 +8,9 @@
  */
 
 import useColors from '@poppinss/colors'
-import { REPLServer, Recoverable } from 'node:repl'
-import prettyRepl from 'pretty-repl'
+import { REPLServer, Recoverable, start as startRepl } from 'node:repl'
 import stringWidth from 'string-width'
 import { inspect, promisify as utilPromisify } from 'node:util'
-import { colorizer } from './colorizer.js'
 import { Handler, ContextOptions, Compiler } from './types.js'
 
 /**
@@ -348,14 +346,12 @@ export class Repl {
   start() {
     this.#printWelcomeMessage()
 
-    this.server = prettyRepl.start({
+    this.server = startRepl({
       prompt: '> ',
       input: process.stdin,
       output: process.stdout,
       terminal: process.stdout.isTTY && !Number.parseInt(process.env.NODE_NO_READLINE!, 10),
       useGlobal: true,
-      // @ts-ignore
-      colorize: colorizer(),
     })
 
     /**

@@ -55,8 +55,6 @@
   },
   "dependencies": {
     "@poppinss/colors": "4.1.0-2",
-    "emphasize": "^6.0.0",
-    "pretty-repl": "^4.0.0",
     "string-width": "^6.1.0"
   },
   "author": "virk,julien-r44,adonisjs",
