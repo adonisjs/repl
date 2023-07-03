@@ -59,12 +59,12 @@ new Repl({
     function loadDatabase(repl) {
       repl.server!.context.db = db
       repl.notify(
-        `Loaded database. You can access it using the ${repl.colors.underline('"db"')} property`,
+        `Loaded database. You can access it using the ${repl.colors.underline('"db"')} property`
       )
     },
     {
       description: 'Loads database to the "db" property.',
-    },
+    }
   )
   .addMethod(
     'getModels',
@@ -75,6 +75,6 @@ new Repl({
     },
     {
       description: 'Loads database to the "models" property.',
-    },
+    }
   )
   .start()

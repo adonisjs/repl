@@ -59,18 +59,6 @@
     "pretty-repl": "^4.0.0",
     "string-width": "^6.1.0"
   },
-  "peerDependencies": {
-    "@adonisjs/core": "^6.1.5-4",
-    "ts-node": "^10.4.0"
-  },
-  "peerDependenciesMeta": {
-    "@adonisjs/core": {
-      "optional": true
-    },
-    "ts-node": {
-      "optional": true
-    }
-  },
   "author": "virk,julien-r44,adonisjs",
   "license": "MIT",
   "homepage": "https://github.com/adonisjs/repl#readme",
