@@ -2,11 +2,11 @@
   "name": "@adonisjs/repl",
   "description": "REPL for AdonisJS",
   "version": "4.0.0-1",
-  "main": "build/index.js",
-  "type": "module",
   "engines": {
     "node": ">=18.16.0"
   },
+  "main": "build/index.js",
+  "type": "module",
   "files": [
     "build/src",
     "build/factories",
@@ -15,7 +15,7 @@
   ],
   "exports": {
     ".": "./build/index.js",
-    "./types": "./build/src/types/main.js"
+    "./types": "./build/src/types.js"
   },
   "scripts": {
     "pretest": "npm run lint",
