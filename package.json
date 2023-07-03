@@ -22,6 +22,7 @@
     "test": "c8 npm run quick:test",
     "lint": "eslint . --ext=.ts",
     "clean": "del-cli build",
+    "typecheck": "tsc --noEmit",
     "compile": "npm run lint && npm run clean && tsc",
     "build": "npm run compile",
     "release": "np --message=\"chore(release): %s\"",
