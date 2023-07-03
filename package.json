@@ -8,32 +8,13 @@
     "node": ">=18.16.0"
   },
   "files": [
-    "commands",
-    "index.ts",
-    "configure.ts",
-    "src",
-    "services",
-    "providers",
-    "factories",
-    "build/configure.js",
-    "build/configure.d.ts",
-    "build/index.js",
-    "build/index.d.ts",
     "build/src",
-    "build/services",
-    "build/providers",
-    "build/commands",
     "build/factories",
-    "build/stubs",
     "build/index.d.ts",
     "build/index.js"
   ],
   "exports": {
     ".": "./build/index.js",
-    "./commands": "./build/commands/main.js",
-    "./commands/*": "./build/commands/*.js",
-    "./providers/repl_provider": "./build/providers/repl_provider.js",
-    "./services/main": "./build/services/main.js",
     "./types": "./build/src/types/main.js"
   },
   "scripts": {
@@ -41,16 +22,14 @@
     "test": "c8 npm run quick:test",
     "lint": "eslint . --ext=.ts",
     "clean": "del-cli build",
-    "compile": "npm run lint && npm run clean && tsc && npm run copy:templates && npm run index:commands",
-    "copy:templates": "copyfiles \"stubs/**/*.stub\" build",
+    "compile": "npm run lint && npm run clean && tsc",
     "build": "npm run compile",
     "release": "np --message=\"chore(release): %s\"",
     "version": "npm run build",
     "sync-labels": "github-label-sync --labels .github/labels.json adonisjs/repl",
     "quick:test": "node --enable-source-maps --loader=ts-node/esm bin/test.ts",
     "format": "prettier --write .",
-    "prepublishOnly": "npm run build",
-    "index:commands": "adonis-kit index build/commands"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@adonisjs/core": "^6.1.5-4",

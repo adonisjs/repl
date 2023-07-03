@@ -13,7 +13,7 @@ import prettyRepl from 'pretty-repl'
 import stringWidth from 'string-width'
 import { inspect, promisify as utilPromisify } from 'node:util'
 import { colorizer } from './colorizer.js'
-import { Handler, ContextOptions, Compiler } from './types/main.js'
+import { Handler, ContextOptions, Compiler } from './types.js'
 
 /**
  * List of node global properties to remove from the
@@ -134,7 +134,7 @@ export class Repl {
      */
     if (this.#compiler?.supportsTypescript) {
       console.log(
-        `${this.colors.green(icons.tick)} ${this.colors.dim('typescript compilation supported')}`,
+        `${this.colors.green(icons.tick)} ${this.colors.dim('typescript compilation supported')}`
       )
       console.log('')
     }
@@ -165,7 +165,7 @@ export class Repl {
       {
         description: 'Clear a property from the REPL context',
         usage: `clear ${this.colors.gray('(propertyName)')}`,
-      },
+      }
     )
 
     /**
@@ -179,7 +179,7 @@ export class Repl {
       {
         description: 'Promisify a function. Similar to Node.js "util.promisify"',
         usage: `p ${this.colors.gray('(function)')}`,
-      },
+      }
     )
 
     /**
@@ -217,7 +217,7 @@ export class Repl {
     code: string,
     context: any,
     filename: string,
-    callback: (err: Error | null, result?: any) => void,
+    callback: (err: Error | null, result?: any) => void
   ) {
     try {
       const compiled = this.#compiler!.compile(code, filename)
@@ -295,8 +295,8 @@ export class Repl {
 
       console.log(
         `${this.colors.yellow(options.usage || method)}${spaces}${this.colors.dim(
-          options.description || '',
-        )}`,
+          options.description || ''
+        )}`
       )
     })
   }
