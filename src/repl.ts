@@ -8,6 +8,7 @@
  */
 
 import useColors from '@poppinss/colors'
+import type { Colors } from '@poppinss/colors/types'
 import { REPLServer, Recoverable, start as startRepl } from 'node:repl'
 import stringWidth from 'string-width'
 import { inspect, promisify as utilPromisify } from 'node:util'
@@ -85,14 +86,6 @@ export class Repl {
    */
   #originalEval: Function | null = null
 
-  colors = useColors.ansi()
-
-  /**
-   * Reference to the repl server. Available after the `start` method
-   * is invoked
-   */
-  server?: REPLServer
-
   /**
    * Compiler that will transform the user input just
    * before evaluation
@@ -115,6 +108,17 @@ export class Repl {
    * Path to the history file
    */
   #historyFilePath: string | undefined
+
+  /**
+   * Colors reference
+   */
+  colors: Colors = useColors.ansi()
+
+  /**
+   * Reference to the repl server. Available after the `start` method
+   * is invoked
+   */
+  server?: REPLServer
 
   constructor(options?: { compiler?: Compiler; historyFilePath?: string }) {
     this.#compiler = options?.compiler
