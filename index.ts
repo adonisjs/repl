@@ -7,6 +7,4 @@
  * file that was distributed with this source code.
  */
 
-import './src/types/extended.js'
-
 export { Repl } from './src/repl.js'
