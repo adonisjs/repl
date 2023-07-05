@@ -7,12 +7,13 @@
  * file that was distributed with this source code.
  */
 
+import stringWidth from 'string-width'
 import useColors from '@poppinss/colors'
 import type { Colors } from '@poppinss/colors/types'
-import { REPLServer, Recoverable, start as startRepl } from 'node:repl'
-import stringWidth from 'string-width'
 import { inspect, promisify as utilPromisify } from 'node:util'
-import { Handler, ContextOptions, Compiler } from './types.js'
+import { REPLServer, Recoverable, start as startRepl } from 'node:repl'
+
+import type { MethodCallback, MethodOptions, Compiler } from './types.js'
 
 /**
  * List of node global properties to remove from the
@@ -67,11 +68,6 @@ const TS_UTILS_HELPERS = [
   '__classPrivateFieldIn',
 ]
 
-const icons =
-  process.platform === 'win32' && !process.env.WT_SESSION
-    ? { tick: '√', pointer: '>' }
-    : { tick: '✔', pointer: '❯' }
-
 export class Repl {
   /**
    * Length of the longest custom method name. We need to show a
@@ -84,13 +80,18 @@ export class Repl {
    * Since we are monkey patching it, we need a reference to it
    * to call it after our custom logic
    */
-  #originalEval: Function | null = null
+  #originalEval?: Function
 
   /**
    * Compiler that will transform the user input just
    * before evaluation
    */
   #compiler?: Compiler
+
+  /**
+   * Path to the history file
+   */
+  #historyFilePath?: string
 
   /**
    * Set of registered ready callbacks
@@ -101,13 +102,8 @@ export class Repl {
    * A set of registered custom methods
    */
   #customMethods: {
-    [name: string]: { handler: Handler; options: ContextOptions & { width: number } }
+    [name: string]: { handler: MethodCallback; options: MethodOptions & { width: number } }
   } = {}
-
-  /**
-   * Path to the history file
-   */
-  #historyFilePath: string | undefined
 
   /**
    * Colors reference
@@ -126,25 +122,30 @@ export class Repl {
   }
 
   /**
-   * Prints the welcome message
+   * Registering custom methods with the server context by wrapping
+   * them inside a function and passes the REPL server instance
+   * to the method
    */
-  #printWelcomeMessage() {
-    console.log('')
-
-    /**
-     * Log about typescript support
-     */
-    if (this.#compiler?.supportsTypescript) {
-      console.log(
-        `${this.colors.green(icons.tick)} ${this.colors.dim('typescript compilation supported')}`
-      )
-      console.log('')
+  #registerCustomMethodWithContext(name: string) {
+    const customMethod = this.#customMethods[name]
+    if (!customMethod) {
+      return
     }
 
     /**
-     * Log about help command
+     * Wrap handler
      */
-    this.notify('Type ".ls" to a view list of available context methods/properties')
+    const handler = (...args: any[]) => customMethod.handler(this, ...args)
+
+    /**
+     * Re-define the function name to be more description
+     */
+    Object.defineProperty(handler, 'name', { value: customMethod.handler.name })
+
+    /**
+     * Register with the context
+     */
+    this.server!.context[name] = handler
   }
 
   /**
@@ -187,13 +188,6 @@ export class Repl {
     /**
      * Register all custom methods with the context
      */
-    this.#registerCustomMethodsWithContext()
-  }
-
-  /**
-   * Register custom methods with the server context
-   */
-  #registerCustomMethodsWithContext() {
     Object.keys(this.#customMethods).forEach((name) => {
       this.#registerCustomMethodWithContext(name)
     })
@@ -209,11 +203,11 @@ export class Repl {
   /**
    * Custom eval method to execute the user code
    *
-   * Basically we are monkey patching the original eval method.
-   * The reason why we need to do that is because we want :
-   * - to compile the user code before executing it
-   * - and also benefit from the original eval method that supports
-   *  cool features like top level await.
+   * Basically we are monkey patching the original eval method, because
+   * we want to:
+   * - Compile the user code before executing it
+   * - And also benefit from the original eval method that supports
+   *   cool features like top level await
    */
   #eval(
     code: string,
@@ -222,10 +216,7 @@ export class Repl {
     callback: (err: Error | null, result?: any) => void
   ) {
     try {
-      const compiled = this.#compiler!.compile(code, filename)
-        .replace('export { };', '')
-        .replace(/\/\/# sourceMappingURL=(.*)$/, '/** sourceMappingURL=$1 */')
-
+      const compiled = this.#compiler ? this.#compiler!.compile(code, filename) : code
       return this.#originalEval!(compiled, context, filename, callback)
     } catch (error) {
       if (this.#isRecoverableError(error)) {
@@ -293,36 +284,13 @@ export class Repl {
 
     Object.keys(this.#customMethods).forEach((method) => {
       const { options } = this.#customMethods[method]
-      const spaces = new Array(this.#longestCustomMethodName - options.width + 2).join(' ')
 
-      console.log(
-        `${this.colors.yellow(options.usage || method)}${spaces}${this.colors.dim(
-          options.description || ''
-        )}`
-      )
+      const usage = this.colors.yellow(options.usage || method)
+      const spaces = ' '.repeat(this.#longestCustomMethodName - options.width + 2)
+      const description = this.colors.dim(options.description || '')
+
+      console.log(`${usage}${spaces}${description}`)
     })
-  }
-
-  #registerCustomMethodWithContext(name: string) {
-    const customMethod = this.#customMethods[name]
-    if (!customMethod) {
-      return
-    }
-
-    /**
-     * Wrap handler
-     */
-    const handler = (...args: any[]) => customMethod.handler(this, ...args)
-
-    /**
-     * Re-define the function name to be more description
-     */
-    Object.defineProperty(handler, 'name', { value: customMethod.handler.name })
-
-    /**
-     * Register with the context
-     */
-    this.server!.context[name] = handler
   }
 
   /**
@@ -345,13 +313,43 @@ export class Repl {
   }
 
   /**
+   * Register a callback to be invoked once the server is ready
+   */
+  ready(callback: (repl: Repl) => void): this {
+    this.#onReadyCallbacks.push(callback)
+    return this
+  }
+
+  /**
+   * Register a custom loader function to be added to the context
+   */
+  addMethod(name: string, handler: MethodCallback, options?: MethodOptions): this {
+    const width = stringWidth(options?.usage || name)
+    if (width > this.#longestCustomMethodName) {
+      this.#longestCustomMethodName = width
+    }
+
+    this.#customMethods[name] = { handler, options: Object.assign({ width }, options) }
+
+    /**
+     * Register method right away when server has been started
+     */
+    if (this.server) {
+      this.#registerCustomMethodWithContext(name)
+    }
+
+    return this
+  }
+
+  /**
    * Start the REPL server
    */
   start() {
-    this.#printWelcomeMessage()
+    console.log('')
+    this.notify('Type ".ls" to a view list of available context methods/properties')
 
     this.server = startRepl({
-      prompt: '> ',
+      prompt: `> ${this.#compiler?.supportsTypescript ? '(ts) ' : '(js) '}`,
       input: process.stdin,
       output: process.stdout,
       terminal: process.stdout.isTTY && !Number.parseInt(process.env.NODE_NO_READLINE!, 10),
@@ -388,35 +386,6 @@ export class Repl {
      * Execute onReady callbacks
      */
     this.#onReadyCallbacks.forEach((callback) => callback(this))
-
-    return this
-  }
-
-  /**
-   * Register a callback to be invoked once the server is ready
-   */
-  ready(callback: (repl: Repl) => void): this {
-    this.#onReadyCallbacks.push(callback)
-    return this
-  }
-
-  /**
-   * Register a custom loader function to be added to the context
-   */
-  addMethod(name: string, handler: Handler, options?: ContextOptions): this {
-    const width = stringWidth(options?.usage || name)
-    if (width > this.#longestCustomMethodName) {
-      this.#longestCustomMethodName = width
-    }
-
-    this.#customMethods[name] = { handler, options: Object.assign({ width }, options) }
-
-    /**
-     * Register method right away when server has been started
-     */
-    if (this.server) {
-      this.#registerCustomMethodWithContext(name)
-    }
 
     return this
   }

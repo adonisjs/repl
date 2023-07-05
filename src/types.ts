@@ -10,15 +10,14 @@
 import { Repl } from './repl.js'
 
 /**
- * Custom method handler
+ * Custom method callback function
  */
-export type Handler = (repl: Repl, ...args: any[]) => any
+export type MethodCallback = (repl: Repl, ...args: any[]) => any
 
 /**
- * Options that can be set when defining a loader
- * method
+ * Options that can be set when defining a custom method
  */
-export type ContextOptions = {
+export type MethodOptions = {
   description?: string
   usage?: string
 }

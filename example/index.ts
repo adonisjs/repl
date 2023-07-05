@@ -9,8 +9,8 @@
 
 import { join } from 'node:path'
 import { homedir } from 'node:os'
-import { Repl } from '../src/repl.js'
 import { create } from 'ts-node'
+import { Repl } from '../src/repl.js'
 
 /**
  * A dummy database object
@@ -46,7 +46,10 @@ const tsNode = create({ project: '../tsconfig.json' })
 const compiler = {
   supportsTypescript: true,
   compile(code: string, fileName: string) {
-    return tsNode.compile(code, fileName)
+    const output = tsNode.compile(code, fileName)
+    return output
+      .replace('export { };', '')
+      .replace(/\/\/# sourceMappingURL=(.*)$/, '/** sourceMappingURL=$1 */')
   },
 }
 

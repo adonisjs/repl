@@ -9,7 +9,6 @@
   "type": "module",
   "files": [
     "build/src",
-    "build/factories",
     "build/index.d.ts",
     "build/index.js"
   ],
@@ -39,7 +38,6 @@
     "@commitlint/cli": "^17.6.6",
     "@commitlint/config-conventional": "^17.6.6",
     "@japa/assert": "^2.0.0-1",
-    "@japa/file-system": "^2.0.0-1",
     "@japa/runner": "^3.0.0-2",
     "@swc/core": "^1.3.67",
     "@types/node": "^20.3.3",
@@ -84,7 +82,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "tag": "latest"
+    "tag": "next"
   },
   "np": {
     "message": "chore(release): %s",
