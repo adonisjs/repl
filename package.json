@@ -33,10 +33,11 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@adonisjs/core": "^6.1.5-4",
     "@adonisjs/eslint-config": "^1.1.7",
     "@adonisjs/prettier-config": "^1.1.7",
     "@adonisjs/tsconfig": "^1.1.7",
+    "@commitlint/cli": "^17.6.6",
+    "@commitlint/config-conventional": "^17.6.6",
     "@japa/assert": "^2.0.0-1",
     "@japa/file-system": "^2.0.0-1",
     "@japa/runner": "^3.0.0-2",
