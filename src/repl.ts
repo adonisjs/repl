@@ -342,6 +342,22 @@ export class Repl {
   }
 
   /**
+   * Returns the collection of registered methods
+   */
+  getMethods() {
+    return this.#customMethods
+  }
+
+  /**
+   * Register a compiler. Make sure register the compiler before
+   * calling the start method
+   */
+  useCompiler(compiler: Compiler): this {
+    this.#compiler = compiler
+    return this
+  }
+
+  /**
    * Start the REPL server
    */
   start() {
