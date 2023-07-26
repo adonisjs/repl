@@ -257,17 +257,20 @@ export class Repl {
     console.log('')
     console.log(this.colors.green('CONTEXT PROPERTIES/METHODS:'))
 
-    const context = Object.keys(this.server!.context).reduce((result, key) => {
-      if (
-        !this.#customMethods[key] &&
-        !GLOBAL_NODE_PROPERTIES.includes(key) &&
-        !TS_UTILS_HELPERS.includes(key)
-      ) {
-        result[key] = this.server!.context[key]
-      }
+    const context = Object.keys(this.server!.context).reduce(
+      (result, key) => {
+        if (
+          !this.#customMethods[key] &&
+          !GLOBAL_NODE_PROPERTIES.includes(key) &&
+          !TS_UTILS_HELPERS.includes(key)
+        ) {
+          result[key] = this.server!.context[key]
+        }
 
-      return result
-    }, {} as Record<string, any>)
+        return result
+      },
+      {} as Record<string, any>
+    )
 
     console.log(inspect(context, false, 1, true))
   }
