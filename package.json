@@ -8,7 +8,9 @@
   "main": "build/index.js",
   "type": "module",
   "files": [
-    "build"
+    "build",
+    "!build/bin",
+    "!build/examples"
   ],
   "exports": {
     ".": "./build/index.js",
@@ -20,7 +22,8 @@
     "lint": "eslint . --ext=.ts",
     "clean": "del-cli build",
     "typecheck": "tsc --noEmit",
-    "compile": "npm run lint && npm run clean && tsup-node",
+    "precompile": "npm run lint && npm run clean",
+    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
     "build": "npm run compile",
     "release": "np",
     "version": "npm run build",
@@ -99,13 +102,13 @@
   },
   "tsup": {
     "entry": [
-      "./index.ts",
-      "./src/types.ts"
+      "./index.ts"
     ],
     "outDir": "./build",
     "clean": true,
     "format": "esm",
-    "dts": true,
+    "dts": false,
+    "sourcemap": true,
     "target": "esnext"
   }
 }
