@@ -12,6 +12,7 @@ import useColors from '@poppinss/colors'
 import type { Colors } from '@poppinss/colors/types'
 import { inspect, promisify as utilPromisify } from 'node:util'
 import { REPLServer, Recoverable, start as startRepl } from 'node:repl'
+import type { ReplOptions } from 'node:repl'
 
 import type { MethodCallback, MethodOptions, Compiler } from './types.js'
 
@@ -363,7 +364,7 @@ export class Repl {
   /**
    * Start the REPL server
    */
-  start() {
+  start(options?: ReplOptions) {
     console.log('')
     this.notify('Type ".ls" to a view list of available context methods/properties')
 
@@ -373,6 +374,7 @@ export class Repl {
       output: process.stdout,
       terminal: process.stdout.isTTY && !Number.parseInt(process.env.NODE_NO_READLINE!, 10),
       useGlobal: true,
+      ...options,
     })
 
     /**
