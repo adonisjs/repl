@@ -11,7 +11,7 @@ import stringWidth from 'string-width'
 import useColors from '@poppinss/colors'
 import type { Colors } from '@poppinss/colors/types'
 import { inspect, promisify as utilPromisify } from 'node:util'
-import { REPLServer, Recoverable, start as startRepl } from 'node:repl'
+import { type REPLServer, Recoverable, type ReplOptions, start as startRepl } from 'node:repl'
 
 import type { MethodCallback, MethodOptions, Compiler } from './types.js'
 
@@ -34,6 +34,7 @@ const GLOBAL_NODE_PROPERTIES = [
   'btoa',
   'fetch',
   'crypto',
+  'navigator',
 ]
 
 const TS_UTILS_HELPERS = [
@@ -69,6 +70,8 @@ const TS_UTILS_HELPERS = [
 ]
 
 export class Repl {
+  #replOptions: ReplOptions
+
   /**
    * Length of the longest custom method name. We need to show a
    * symmetric view of custom methods and their description
@@ -116,9 +119,11 @@ export class Repl {
    */
   server?: REPLServer
 
-  constructor(options?: { compiler?: Compiler; historyFilePath?: string }) {
-    this.#compiler = options?.compiler
-    this.#historyFilePath = options?.historyFilePath
+  constructor(options?: { compiler?: Compiler; historyFilePath?: string } & ReplOptions) {
+    const { compiler, historyFilePath, ...rest } = options || {}
+    this.#compiler = compiler
+    this.#historyFilePath = historyFilePath
+    this.#replOptions = rest
   }
 
   /**
@@ -373,6 +378,7 @@ export class Repl {
       output: process.stdout,
       terminal: process.stdout.isTTY && !Number.parseInt(process.env.NODE_NO_READLINE!, 10),
       useGlobal: true,
+      ...this.#replOptions,
     })
 
     /**
