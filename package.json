@@ -102,7 +102,8 @@
   },
   "tsup": {
     "entry": [
-      "./index.ts"
+      "./index.ts",
+      "./src/types.ts"
     ],
     "outDir": "./build",
     "clean": true,
