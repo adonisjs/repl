@@ -1,103 +1,65 @@
 {
   "name": "@adonisjs/repl",
-  "version": "3.1.11",
   "description": "REPL for AdonisJS",
-  "main": "build/providers/ReplProvider.js",
-  "files": [
-    "build/adonis-typings",
-    "build/commands",
-    "build/providers",
-    "build/src",
-    "build/standalone.d.ts",
-    "build/standalone.js"
-  ],
-  "typings": "./build/adonis-typings/index.d.ts",
-  "scripts": {
-    "mrm": "mrm --preset=@adonisjs/mrm-preset",
-    "pretest": "npm run lint",
-    "test": "node -r @adonisjs/require-ts/build/register ./bin/test.ts",
-    "clean": "del-cli build",
-    "compile": "npm run lint && npm run clean && tsc",
-    "build": "npm run compile",
-    "prepublishOnly": "npm run build",
-    "lint": "eslint . --ext=.ts",
-    "format": "prettier --write .",
-    "commit": "git-cz",
-    "release": "np --message=\"chore(release): %s\"",
-    "version": "npm run build",
-    "sync-labels": "github-label-sync --labels ./node_modules/@adonisjs/mrm-preset/gh-labels.json adonisjs/repl"
+  "version": "4.0.0-10",
+  "engines": {
+    "node": ">=18.16.0"
   },
-  "keywords": [
-    "adonisjs",
-    "repl",
-    "node-repl"
+  "main": "build/index.js",
+  "type": "module",
+  "files": [
+    "build",
+    "!build/bin",
+    "!build/examples"
   ],
-  "author": "virk,adonisjs",
-  "license": "MIT",
-  "peerDependencies": {
-    "@adonisjs/core": "^5.1.0"
+  "exports": {
+    ".": "./build/index.js",
+    "./types": "./build/src/types.js"
+  },
+  "scripts": {
+    "pretest": "npm run lint",
+    "test": "c8 npm run quick:test",
+    "lint": "eslint . --ext=.ts",
+    "clean": "del-cli build",
+    "typecheck": "tsc --noEmit",
+    "precompile": "npm run lint && npm run clean",
+    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
+    "build": "npm run compile",
+    "release": "np",
+    "version": "npm run build",
+    "sync-labels": "github-label-sync --labels .github/labels.json adonisjs/repl",
+    "quick:test": "node --enable-source-maps --loader=ts-node/esm bin/test.ts",
+    "format": "prettier --write .",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@adonisjs/core": "^5.8.2",
-    "@adonisjs/mrm-preset": "^5.0.3",
-    "@adonisjs/require-ts": "^2.0.12",
-    "@japa/assert": "^1.3.4",
-    "@japa/run-failed-tests": "^1.0.7",
-    "@japa/runner": "^2.0.8",
-    "@japa/spec-reporter": "^1.1.12",
-    "@poppinss/dev-utils": "^2.0.3",
-    "@types/node": "^17.0.35",
-    "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "^3.3.0",
-    "del-cli": "^4.0.1",
-    "doctoc": "^2.2.0",
-    "eslint": "^8.16.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-adonis": "^2.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "github-label-sync": "^2.2.0",
-    "husky": "^8.0.1",
-    "mrm": "^4.0.0",
-    "np": "^7.6.1",
-    "prettier": "^2.6.2",
-    "typescript": "^4.6.4"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "node ./node_modules/@adonisjs/mrm-preset/validateCommit/conventional/validate.js"
-    }
-  },
-  "nyc": {
-    "exclude": [
-      "test"
-    ],
-    "extension": [
-      ".ts"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "np": {
-    "contents": ".",
-    "anyBranch": false
-  },
-  "publishConfig": {
-    "access": "public",
-    "tag": "latest"
+    "@adonisjs/eslint-config": "^1.2.1",
+    "@adonisjs/prettier-config": "^1.2.1",
+    "@adonisjs/tsconfig": "^1.2.1",
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
+    "@japa/assert": "^2.1.0",
+    "@japa/runner": "^3.1.1",
+    "@swc/core": "^1.3.102",
+    "@types/node": "^20.10.6",
+    "c8": "^9.0.0",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.56.0",
+    "github-label-sync": "^2.3.1",
+    "husky": "^8.0.3",
+    "np": "^9.2.0",
+    "prettier": "^3.1.1",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@poppinss/colors": "^3.0.2",
-    "node-repl-await": "^0.1.2",
-    "parse-imports": "0.0.5",
-    "string-width": "^4.2.2"
+    "@poppinss/colors": "^4.1.2",
+    "string-width": "^7.0.0"
   },
-  "directories": {
-    "example": "example",
-    "test": "test"
-  },
+  "author": "virk,julien-r44,adonisjs",
+  "license": "MIT",
+  "homepage": "https://github.com/adonisjs/repl#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adonisjs/repl.git"
@@ -105,57 +67,49 @@
   "bugs": {
     "url": "https://github.com/adonisjs/repl/issues"
   },
-  "homepage": "https://github.com/adonisjs/repl#readme",
-  "adonisjs": {
-    "aceProviders": [
-      "@adonisjs/repl"
-    ],
-    "commands": [
-      "@adonisjs/repl/build/commands"
-    ],
-    "types": "@adonisjs/repl"
-  },
-  "mrmConfig": {
-    "core": true,
-    "license": "MIT",
-    "services": [
-      "github-actions"
-    ],
-    "minNodeVersion": "14.15.4",
-    "probotApps": [
-      "stale",
-      "lock"
-    ],
-    "runGhActionsOnWindows": true
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:adonis/typescriptPackage",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "endOfLine": "auto"
-        }
-      ]
-    }
-  },
-  "eslintIgnore": [
-    "build"
+  "keywords": [
+    "adonisjs",
+    "repl",
+    "node-repl"
   ],
-  "prettier": {
-    "trailingComma": "es5",
-    "semi": false,
-    "singleQuote": true,
-    "useTabs": false,
-    "quoteProps": "consistent",
-    "bracketSpacing": true,
-    "arrowParens": "always",
-    "printWidth": 100
+  "eslintConfig": {
+    "extends": "@adonisjs/eslint-config/package"
+  },
+  "prettier": "@adonisjs/prettier-config",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
+  "np": {
+    "message": "chore(release): %s",
+    "tag": "next",
+    "branch": "main",
+    "anyBranch": false
+  },
+  "c8": {
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "exclude": [
+      "tests/**"
+    ]
+  },
+  "tsup": {
+    "entry": [
+      "./index.ts",
+      "./src/types.ts"
+    ],
+    "outDir": "./build",
+    "clean": true,
+    "format": "esm",
+    "dts": false,
+    "sourcemap": true,
+    "target": "esnext"
   }
 }

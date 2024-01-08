@@ -7,15 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import { join } from 'path'
-import { homedir } from 'os'
-import { Repl } from '../src/Repl'
-
-/**
- * Reference to the compiler symbol to get the reference
- * to the compiler from the global object
- */
-const COMPILER_SYMBOL = Symbol.for('REQUIRE_TS_COMPILER')
+import { join } from 'node:path'
+import { homedir } from 'node:os'
+import { create } from 'ts-node'
+import { Repl } from '../src/repl.js'
 
 /**
  * A dummy database object
@@ -47,11 +42,25 @@ const models = {
   Account,
 }
 
-new Repl(global[COMPILER_SYMBOL], join(homedir(), '.adonis_repl_history'))
+const tsNode = create({ project: '../tsconfig.json' })
+const compiler = {
+  supportsTypescript: true,
+  compile(code: string, fileName: string) {
+    const output = tsNode.compile(code, fileName)
+    return output
+      .replace('export { };', '')
+      .replace(/\/\/# sourceMappingURL=(.*)$/, '/** sourceMappingURL=$1 */')
+  },
+}
+
+new Repl({
+  compiler,
+  historyFilePath: join(homedir(), '.adonis_repl_history'),
+})
   .addMethod(
     'getDb',
     function loadDatabase(repl) {
-      repl.server.context.db = db
+      repl.server!.context.db = db
       repl.notify(
         `Loaded database. You can access it using the ${repl.colors.underline('"db"')} property`
       )
@@ -63,9 +72,9 @@ new Repl(global[COMPILER_SYMBOL], join(homedir(), '.adonis_repl_history'))
   .addMethod(
     'getModels',
     (repl) => {
-      repl.server.context.models = models
+      repl.server!.context.models = models
       repl.notify('Loaded models. You can access them using the "models" property')
-      repl.server.displayPrompt()
+      repl.server!.displayPrompt()
     },
     {
       description: 'Loads database to the "models" property.',
