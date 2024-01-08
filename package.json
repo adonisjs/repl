@@ -83,11 +83,11 @@
   },
   "publishConfig": {
     "access": "public",
-    "tag": "public"
+    "tag": "latest"
   },
   "np": {
     "message": "chore(release): %s",
-    "tag": "public",
+    "tag": "latest",
     "branch": "main",
     "anyBranch": false
   },
