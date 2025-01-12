@@ -368,7 +368,7 @@ export class Repl {
   /**
    * Start the REPL server
    */
-  start() {
+  start(context?: Record<string, any>) {
     console.log('')
     this.notify('Type ".ls" to a view list of available context methods/properties')
 
@@ -380,6 +380,15 @@ export class Repl {
       useGlobal: true,
       ...this.#replOptions,
     })
+
+    /**
+     * Share context with the server
+     */
+    if (context) {
+      Object.keys(context).forEach((key) => {
+        this.server!.context[key] = context[key]
+      })
+    }
 
     /**
      * Define the `ls` command

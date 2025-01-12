@@ -9,7 +9,8 @@
 
 import { join } from 'node:path'
 import { homedir } from 'node:os'
-import { create } from 'ts-node'
+import { create } from 'ts-node-maintained'
+
 import { Repl } from '../src/repl.js'
 
 /**
