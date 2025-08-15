@@ -9,9 +9,9 @@
 
 import { join } from 'node:path'
 import { homedir } from 'node:os'
-import { create } from 'ts-node-maintained'
 
 import { Repl } from '../src/repl.js'
+import { stripTypeScriptTypes } from 'node:module'
 
 /**
  * A dummy database object
@@ -43,11 +43,10 @@ const models = {
   Account,
 }
 
-const tsNode = create({ project: '../tsconfig.json' })
 const compiler = {
   supportsTypescript: true,
-  compile(code: string, fileName: string) {
-    const output = tsNode.compile(code, fileName)
+  compile(code: string, _: string) {
+    const output = stripTypeScriptTypes(code)
     return output
       .replace('export { };', '')
       .replace(/\/\/# sourceMappingURL=(.*)$/, '/** sourceMappingURL=$1 */')
