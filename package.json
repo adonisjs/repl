@@ -37,15 +37,16 @@
     "@release-it/conventional-changelog": "^10.0.1",
     "@types/node": "^24.3.0",
     "del-cli": "^6.0.0",
-    "eslint": "^9.33.0",
+    "eslint": "^9.34.0",
     "prettier": "^3.6.2",
     "release-it": "^19.0.4",
     "tsup": "^8.5.0",
+    "typedoc": "^0.28.12",
     "typescript": "^5.9.2"
   },
   "dependencies": {
     "@poppinss/colors": "^4.1.5",
-    "string-width": "^7.2.0"
+    "string-width": "^8.1.0"
   },
   "homepage": "https://github.com/adonisjs/repl#readme",
   "repository": {
