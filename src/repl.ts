@@ -69,6 +69,21 @@ const TS_UTILS_HELPERS = [
   '__classPrivateFieldIn',
 ]
 
+/**
+ * A REPL (Read-Eval-Print Loop) server implementation that provides an interactive
+ * command line interface for executing JavaScript/TypeScript code with custom methods
+ * and context management.
+ *
+ * @example
+ * const repl = new Repl({ historyFilePath: '.repl_history' })
+ *
+ * repl.addMethod('greet', (repl, name) => `Hello ${name}!`, {
+ *   description: 'Greets a person',
+ *   usage: 'greet (name)'
+ * })
+ *
+ * repl.start({ myVar: 'Hello World' })
+ */
 export class Repl {
   #replOptions: ReplOptions
 
@@ -119,6 +134,19 @@ export class Repl {
    */
   server?: REPLServer
 
+  /**
+   * Creates a new REPL instance with optional configuration
+   *
+   * @param options - Configuration options for the REPL
+   * @param options.compiler - Custom compiler for transforming user input
+   * @param options.historyFilePath - Path to store command history
+   *
+   * @example
+   * const repl = new Repl({
+   *   historyFilePath: '.repl_history',
+   *   compiler: myTypeScriptCompiler
+   * })
+   */
   constructor(options?: { compiler?: Compiler; historyFilePath?: string } & ReplOptions) {
     const { compiler, historyFilePath, ...rest } = options || {}
     this.#compiler = compiler
@@ -312,6 +340,11 @@ export class Repl {
 
   /**
    * Notify by writing to the console
+   *
+   * @param message - The message to display
+   *
+   * @example
+   * repl.notify('Server connected successfully')
    */
   notify(message: string) {
     console.log(this.colors.yellow().italic(message))
@@ -322,6 +355,13 @@ export class Repl {
 
   /**
    * Register a callback to be invoked once the server is ready
+   *
+   * @param callback - Function to call when the REPL is ready
+   *
+   * @example
+   * repl.ready((repl) => {
+   *   repl.notify('REPL is ready!')
+   * })
    */
   ready(callback: (repl: Repl) => void): this {
     this.#onReadyCallbacks.push(callback)
@@ -330,6 +370,18 @@ export class Repl {
 
   /**
    * Register a custom loader function to be added to the context
+   *
+   * @param name - The name of the method
+   * @param handler - The function to execute
+   * @param options - Optional configuration for the method
+   *
+   * @example
+   * repl.addMethod('greet', (repl, name) => {
+   *   return `Hello ${name}!`
+   * }, {
+   *   description: 'Greets a person by name',
+   *   usage: 'greet (name)'
+   * })
    */
   addMethod(name: string, handler: MethodCallback, options?: MethodOptions): this {
     const width = stringWidth(options?.usage || name)
@@ -351,6 +403,10 @@ export class Repl {
 
   /**
    * Returns the collection of registered methods
+   *
+   * @example
+   * const methods = repl.getMethods()
+   * console.log(Object.keys(methods)) // ['clear', 'p', 'myCustomMethod']
    */
   getMethods() {
     return this.#customMethods
@@ -359,6 +415,15 @@ export class Repl {
   /**
    * Register a compiler. Make sure register the compiler before
    * calling the start method
+   *
+   * @param compiler - The compiler instance to use for transforming code
+   *
+   * @example
+   * const tsCompiler = {
+   *   compile: (code, filename) => ts.transpile(code),
+   *   supportsTypescript: true
+   * }
+   * repl.useCompiler(tsCompiler)
    */
   useCompiler(compiler: Compiler): this {
     this.#compiler = compiler
@@ -367,6 +432,14 @@ export class Repl {
 
   /**
    * Start the REPL server
+   *
+   * @param context - Optional initial context to populate the REPL with
+   *
+   * @example
+   * repl.start({
+   *   db: databaseConnection,
+   *   utils: myUtilities
+   * })
    */
   start(context?: Record<string, any>) {
     console.log('')
