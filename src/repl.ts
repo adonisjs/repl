@@ -13,7 +13,7 @@ import type { Colors } from '@poppinss/colors/types'
 import { inspect, promisify as utilPromisify } from 'node:util'
 import { type REPLServer, Recoverable, type ReplOptions, start as startRepl } from 'node:repl'
 
-import type { MethodCallback, MethodOptions, Compiler } from './types.js'
+import type { MethodCallback, MethodOptions, Compiler } from './types.ts'
 
 /**
  * List of node global properties to remove from the

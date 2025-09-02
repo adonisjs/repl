@@ -10,7 +10,7 @@
 import { join } from 'node:path'
 import { homedir } from 'node:os'
 
-import { Repl } from '../src/repl.js'
+import { Repl } from '../src/repl.ts'
 import { stripTypeScriptTypes } from 'node:module'
 
 /**

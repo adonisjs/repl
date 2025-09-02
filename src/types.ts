@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { type Repl } from './repl.js'
+import { type Repl } from './repl.ts'
 
 /**
  * Custom method callback function
