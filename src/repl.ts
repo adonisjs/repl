@@ -35,6 +35,8 @@ const GLOBAL_NODE_PROPERTIES = [
   'fetch',
   'crypto',
   'navigator',
+  'localStorage',
+  'sessionStorage',
 ]
 
 const TS_UTILS_HELPERS = [
@@ -451,6 +453,9 @@ export class Repl {
       output: process.stdout,
       terminal: process.stdout.isTTY && !Number.parseInt(process.env.NODE_NO_READLINE!, 10),
       useGlobal: true,
+      writer(output) {
+        return inspect(output, { showProxy: false, colors: true })
+      },
       ...this.#replOptions,
     })
 
