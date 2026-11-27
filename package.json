@@ -30,23 +30,23 @@
     "release": "release-it"
   },
   "devDependencies": {
-    "@adonisjs/eslint-config": "^3.0.0",
-    "@adonisjs/prettier-config": "^1.4.5",
+    "@adonisjs/eslint-config": "^3.1.0",
+    "@adonisjs/prettier-config": "^1.5.0",
     "@adonisjs/tsconfig": "^2.0.0",
-    "@poppinss/ts-exec": "^1.4.4",
-    "@release-it/conventional-changelog": "^10.0.5",
-    "@types/node": "^25.3.0",
-    "del-cli": "^7.0.0",
-    "eslint": "^10.0.2",
-    "prettier": "^3.8.1",
-    "release-it": "^19.2.4",
-    "tsdown": "^0.20.3",
-    "typedoc": "^0.28.17",
-    "typescript": "^5.9.3"
+    "@poppinss/ts-exec": "^1.5.2",
+    "@release-it/conventional-changelog": "^12.0.2",
+    "@types/node": "^26.6.11",
+    "del-cli": "^8.0.1",
+    "eslint": "^10.15.0",
+    "prettier": "^3.10.1",
+    "release-it": "^21.1.3",
+    "tsdown": "^0.23.7",
+    "typedoc": "^0.28.20",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "@poppinss/colors": "^4.1.6",
-    "string-width": "^8.2.0"
+    "string-width": "^9.0.0"
   },
   "homepage": "https://github.com/adonisjs/repl#readme",
   "repository": {
