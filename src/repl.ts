@@ -253,7 +253,7 @@ export class Repl {
     try {
       const compiled = this.#compiler ? this.#compiler!.compile(code, filename) : code
       return this.#originalEval!(compiled, context, filename, callback)
-    } catch (error) {
+    } catch (error: any) {
       if (this.#isRecoverableError(error)) {
         callback(new Recoverable(error), null)
         return
